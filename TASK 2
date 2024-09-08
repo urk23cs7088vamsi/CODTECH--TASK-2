@@ -1,0 +1,84 @@
+import java.util.Scanner;
+
+class StudentGradeManager {
+
+    private String studentName;
+    private double[] grades;
+    private int numberOfGrades;
+
+    // Constructor
+    public StudentGradeManager(String name, int numberOfGrades) {
+        this.studentName = name;
+        this.numberOfGrades = numberOfGrades;
+        this.grades = new double[numberOfGrades];
+    }
+
+    // Method to input grades
+    public void inputGrades() {
+        Scanner scanner = new Scanner(System.in);
+        for (int i = 0; i < numberOfGrades; i++) {
+            System.out.print("Enter grade for subject/assignment " + (i + 1) + ": ");
+            grades[i] = scanner.nextDouble();
+        }
+    }
+
+    // Method to calculate the average grade
+    public double calculateAverage() {
+        double total = 0;
+        for (double grade : grades) {
+            total += grade;
+        }
+        return total / numberOfGrades;
+    }
+
+    // Method to determine the letter grade
+    public String getLetterGrade(double average) {
+        if (average >= 90) return "A";
+        else if (average >= 80) return "B";
+        else if (average >= 70) return "C";
+        else if (average >= 60) return "D";
+        else return "F";
+    }
+
+    // Method to determine GPA (out of 4.0 scale)
+    public double getGPA(double average) {
+        if (average >= 90) return 4.0;
+        else if (average >= 80) return 3.0;
+        else if (average >= 70) return 2.0;
+        else if (average >= 60) return 1.0;
+        else return 0.0;
+    }
+
+    // Method to display grade report
+    public void displayGradeReport() {
+        double average = calculateAverage();
+        String letterGrade = getLetterGrade(average);
+        double gpa = getGPA(average);
+
+        System.out.println("\nGrade Report for " + studentName + ":");
+        System.out.println("Average Grade: " + average);
+        System.out.println("Letter Grade: " + letterGrade);
+        System.out.println("GPA: " + gpa);
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Input student information
+        System.out.print("Enter student name: ");
+        String studentName = scanner.nextLine();
+        System.out.print("Enter number of grades to input: ");
+        int numberOfGrades = scanner.nextInt();
+
+        // Create a StudentGradeManager object
+        StudentGradeManager student = new StudentGradeManager(studentName, numberOfGrades);
+
+        // Input grades
+        student.inputGrades();
+
+        // Display grade report
+        student.displayGradeReport();
+
+        scanner.close();
+    }
+}
